@@ -1,0 +1,61 @@
+<%= form_with(model: task, local: true) do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :title, class: "form-label fw-semibold" %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Task title", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :description, class: "form-label fw-semibold" %>
+    <%= f.text_area :description, class: "form-control", rows: 3, placeholder: "Enter Description" %>
+  </div>
+
+  <% assignment = @assignment %>
+
+  <div class="mb-3">
+    <%= f.label :status, "Task Status", class: "form-label fw-semibold" %>
+    <%= select_tag "task[status]", options_for_select(TaskAssignment.statuses.map { |k, _| [k.humanize, k] }, assignment&.status),
+    include_blank: "Select status", class: "form-select select2",required: true %>
+  </div>
+
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= f.label :start_date, class: "form-label fw-semibold" %>
+      <%= f.date_field :start_date, value: assignment&.start_date, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= f.label :due_date, class: "form-label fw-semibold" %>
+      <%= f.date_field :due_date, value: assignment&.due_date, class: "form-control" %>
+    </div>
+  </div>
+
+  <% if type == :new %>
+    <div class="mb-4">
+      <%= f.label :user_ids, "Assign users", class: "form-label fw-semibold" %>
+      <%= f.select :user_ids, options_from_collection_for_select(@users, :id, :first_name, task.user_ids), {},
+      multiple: true, class: "form-select select2" %>
+    </div>
+  <% end %>
+
+  <% if type == :edit %>
+    <div class="mb-4">
+      <%= f.label :user_ids, "Assign users", class: "form-label fw-semibold" %>
+
+      <%= f.select :user_ids, options_from_collection_for_select(@users, :id, :first_name, task.user_ids),
+      {}, multiple: true, class: "form-select select2" %>
+    </div>
+
+  <% end %>
+
+
+  <div class="d-flex justify-content-center pt-4 mb-2 border-top">
+  <%= f.submit(
+        type == :edit ? "Update Task" : "Create Task",
+        class: "btn btn-primary px-5"
+      ) %>
+</div>
+
+
+<% end %>

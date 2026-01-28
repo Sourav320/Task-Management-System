@@ -1,0 +1,18 @@
+<p>Hello <%= @user.first_name %>,</p>
+
+<p>You have been assigned a new task.</p>
+
+<p><strong>Title:</strong> <%= @task.title %></p>
+
+<% if @task.description.present? %>
+  <p><strong>Description:</strong> <%= @task.description %></p>
+<% end %>
+
+<% if @due_date.present? %>
+  <p><strong>Due Date:</strong> <%= @due_date.strftime("%d %b %Y") %></p>
+<% end %>
+
+<p>Please log in to the system to start working on it.</p>
+
+<p>Thanks,<br>
+Task Management System</p>

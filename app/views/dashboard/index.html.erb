@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h3 class="mb-4">
+    Dashboard
+    <% if current_user.roles.exists?(name: "Admin") %>
+      <span class="badge bg-danger ms-2">Admin</span>
+    <% else %>
+      <span class="badge bg-primary ms-2">User</span>
+    <% end %>
+  </h3>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Pending Tasks</h6>
+          <h2 class="fw-bold text-secondary"><%= @pending_count %></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h6 class="text-muted">In Progress</h6>
+          <h2 class="fw-bold text-warning"><%= @in_progress_count %></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h6 class="text-muted">Completed</h6>
+          <h2 class="fw-bold text-success"><%= @completed_count %></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

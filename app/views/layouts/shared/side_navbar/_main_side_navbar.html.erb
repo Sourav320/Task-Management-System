@@ -1,0 +1,48 @@
+<aside id="sidebar" class="sidebar bg-light border-end d-flex flex-column">
+  <!-- TOP -->
+  <div>
+    <div class="sidebar-header px-3 py-3 border-bottom">
+      <h6 class="mb-0 fw-semibold text-dark">Task Management</h6>
+    </div>
+
+    <ul class="nav flex-column px-2 py-3 gap-1">
+
+      <li class="nav-item">
+        <%= link_to dashboard_path,
+              class: "nav-link sidebar-link #{active_class(dashboard_path)}" do %>
+          <i class="bi bi-speedometer2 me-2"></i>
+          <span>Dashboard</span>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to tasks_path,
+              class: "nav-link sidebar-link #{active_class(tasks_path)}" do %>
+          <i class="bi bi-list-task me-2"></i>
+          <span>Task Management</span>
+        <% end %>
+      </li>
+
+      <% if current_user.roles.last.name.downcase == "admin" %>
+        <li class="nav-item">
+          <%= link_to user_management_index_path, class: "nav-link sidebar-link" do %>
+            <i class="bi bi-people"></i>
+            <span>User Management</span>
+          <% end %>
+        </li>
+      <% end %>
+
+    </ul>
+  </div>
+
+  <!-- BOTTOM LOGOUT -->
+  <div class="mt-auto px-3 pb-3 text-center">
+    <%= button_to destroy_user_session_path,
+          method: :delete,
+          class: "btn btn-outline-danger w-100",
+          data: { confirm: "Are you sure you want to logout?" } do %>
+      <i class="bi bi-box-arrow-right me-2"></i>
+      Logout
+    <% end %>
+  </div>
+</aside>

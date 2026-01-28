@@ -1,0 +1,95 @@
+<div class="container d-flex justify-content-center mt-4">
+  <div class="card shadow-lg border-0" style="width: 420px;">
+    <div class="card-body p-4">
+
+      <h3 class="text-center mb-4 fw-bold">Create Account</h3>
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= f.label :first_name, class: "form-label" %>
+            <%= f.text_field :first_name, class: "form-control", placeholder: "First name", required: true %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <%= f.label :last_name, class: "form-label" %>
+            <%= f.text_field :last_name, class: "form-control", placeholder: "Last name", required: true %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :mobile_no, class: "form-label" %>
+          <%= f.telephone_field :mobile_no, class: "form-control", placeholder: "Mobile number",
+          required: true, pattern: "[6-9]{1}[0-9]{9}", title: "Enter a valid 10-digit mobile number" %>
+
+          <div class="invalid-feedback">
+            Please enter a valid 10-digit mobile number.
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control", placeholder: "Email address",
+          autofocus: true, required: true, pattern: "[^@\\s]+@[^@\\s]+\\.[^@\\s]+" %>
+
+          <div class="invalid-feedback">
+            Please enter a valid email address.
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <%= f.label :password, class: "form-label" %>
+          <%= f.password_field :password, class: "form-control", placeholder: "Password (min 6 chars)", required: true %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :password_confirmation, class: "form-label" %>
+          <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm password", required: true %>
+        </div>
+
+        <div class="d-grid">
+          <%= f.submit "Sign Up", class: "btn btn-primary btn-lg" %>
+        </div>
+
+      <% end %>
+
+      <div class="text-center mt-3">
+        <%= link_to "Already have an account? Log in", new_session_path(resource_name), class: "text-decoration-none" %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function () {
+  const forms = $("form");
+
+  // Validate while typing / changing input
+  forms.on("input change blur", "input, select, textarea", function () {
+    const $field = $(this);
+    const form = this.form;
+
+    if ($field[0].checkValidity()) {
+      $field.removeClass("is-invalid").addClass("is-valid");
+    } else {
+      $field.removeClass("is-valid").addClass("is-invalid");
+    }
+
+    $(form).addClass("was-validated");
+  });
+
+  // Validate on submit
+  forms.on("submit", function (event) {
+    if (!this.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    $(this).addClass("was-validated");
+  });
+});
+</script>

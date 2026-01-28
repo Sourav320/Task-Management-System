@@ -1,0 +1,49 @@
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+    <div class="container mt-4">
+      <h4 class="fw-semibold mb-4">Edit User</h4>
+
+      <%= form_with model: @user, url: user_management_path(@user), method: :patch do |f| %>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <%= f.label :first_name, class: "form-label" %>
+            <%= f.text_field :first_name, class: "form-control" %>
+          </div>
+
+          <div class="col-md-6">
+            <%= f.label :last_name, class: "form-label" %>
+            <%= f.text_field :last_name, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :mobile_no, class: "form-label" %>
+          <%= f.text_field :mobile_no, class: "form-control" %>
+        </div>
+
+        <div class="mb-4">
+          <%= label_tag :role_id, "Role", class: "form-label" %>
+          <%= select_tag "user[role_id]",
+                options_from_collection_for_select(
+                  @roles,
+                  :id,
+                  :name,
+                  @user.roles.last&.id
+                ),
+                class: "form-select" %>
+        </div>
+
+        <div class="d-flex justify-content-center mb-2">
+          <%= f.submit "Update User", class: "btn btn-primary px-4" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

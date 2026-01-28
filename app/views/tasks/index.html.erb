@@ -1,0 +1,119 @@
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+
+    <div class="container mt-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-semibold">Task Assignments</h4>
+        <%= link_to "New Task", new_task_path, class: "btn btn-primary shadow-sm" %>
+      </div>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <%= search_form_for @q, url: tasks_path, method: :get do |f| %>
+            <div class="row g-3 align-items-end">
+
+            
+              <div class="col-md-3">
+                <%= f.label :status_eq, "Status", class: "form-label fw-semibold" %>
+
+                <%= f.select :status_eq, TaskAssignment.statuses.map { |key, value| [key.humanize, value] },
+                { include_blank: "All Statuses" }, class: "form-select" %>
+              </div>
+
+
+              <% if current_user.roles.last.name.downcase == "admin" %>
+                <div class="col-md-4">
+                  <%= f.label :user_id_eq, "Assigned User", class: "form-label fw-semibold" %>
+                  <%= f.select :user_id_eq,
+                        options_from_collection_for_select(@users, :id, :first_name, params.dig(:q, :user_id_eq)),
+                        { include_blank: "All Users" },
+                        class: "form-select select2" %>
+                </div>
+              <% end %>
+
+              <div class="col-md-3 d-flex gap-2">
+                <%= f.submit "Filter", class: "btn btn-primary px-4" %>
+                <%= link_to "Reset", tasks_path, class: "btn btn-outline-secondary px-4" %>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white shadow-sm rounded">
+          <thead class="table-light">
+            <tr>
+              <th>No</th>
+              <th>Task</th>
+              <th>User</th>
+              <th>Status</th>
+              <th>Start</th>
+              <th>Due</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @task_assignments.each_with_index do |assignment, index| %>
+
+              <% row_class = assignment.completed? ? "table-success" : assignment.in_progress? ? "table-warning" : "" %>
+
+              <tr class="<%= row_class %>">
+                <td>
+                  <%= index+1 %>
+                </td>
+                <td>
+                  <div class="fw-semibold"><%= assignment.task.title %></div>
+                </td>
+
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-circle bg-secondary text-white d-flex
+                                justify-content-center align-items-center"
+                        style="width:32px;height:32px;font-size:14px;">
+                      <%= assignment.user.first_name.first.upcase %>
+                    </div>
+                    <span><%= assignment.user.first_name %></span>
+                  </div>
+                </td>
+                <td>
+                  <% badge_class = assignment.completed? ? "success" : assignment.in_progress? ? "warning" : "secondary" %>
+
+                  <span class="badge rounded-pill bg-<%= badge_class %> px-3 py-2">
+                    <%= assignment.status.humanize %>
+                  </span>
+                </td>
+
+                <td><%= assignment.start_date&.strftime("%d %b %Y") || "-" %></td>
+                <td><%= assignment.due_date&.strftime("%d %b %Y") || "-" %></td>
+
+                <td class="text-end">
+                  <div class="btn-group btn-group-sm">
+
+                    <%= link_to task_path(assignment&.task), class: "btn btn-outline-info", title: "View" do %>
+                      <i class="bi bi-eye"></i>
+                    <% end %>
+
+                    <%= link_to edit_task_path(assignment&.task), class: "btn btn-outline-warning", title: "Edit" do %>
+                      <i class="bi bi-pencil"></i>
+                    <% end %>
+
+                    <%= button_to task_path(assignment.task), method: :delete, data: { confirm: "Are you sure?" },
+                      class: "btn btn-outline-danger btn-sm", form: { class: "d-inline" },
+                      title: "Delete" do %>
+                      <i class="bi bi-trash"></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <ul class="pagination justify-content-end">
+          <%= will_paginate @task_assignments, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+        </ul>  </div>
+    </div>
+  </div>
+</div>    
