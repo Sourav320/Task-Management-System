@@ -98,3 +98,29 @@ This application helps teams manage tasks efficiently by:
 git clone https://github.com/Sourav320/Task-Management-System.git
 cd Task-Management-System
 
+----
+
+### INSTALL DEPENDECIES
+-- bundle install
+
+#Configarartion Database
+-- username: root
+-- password: your_password
+-- host: localhost
+
+#Create and Migrate Databse
+-- rails db:create
+-- rails db:migrate
+
+## Run Seed File
+
+- rails db:seed
+
+## Run Server
+- rails s
+
+## Open Browser
+- http://localhost:3000
+
+
+
