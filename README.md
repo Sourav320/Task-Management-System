@@ -1,24 +1,100 @@
-# README
+# Task Management System (Ruby on Rails)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A role-based **Task Management System** built with **Ruby on Rails**, supporting **Admin** and **User** roles.  
+The system allows task assignment, status tracking, email notifications, dashboards, user management, and advanced filtering.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## Project Overview
 
-* System dependencies
+This application helps teams manage tasks efficiently by:
+- Assigning tasks to multiple users
+- Tracking task progress (Pending / In Progress / Completed)
+- Sending email notifications on task assignment
+- Providing dashboards for Admin and Users
+- Managing users and roles
+- Searching and filtering tasks by status and user
 
-* Configuration
+---
 
-* Database creation
+## Tech Stack
 
-* Database initialization
+- **Ruby:** 3.2.x  
+- **Rails:** 7.x  
+- **Database:** MySQL  
+- **Authentication:** Devise  
+- **Authorization:** Role-based (Admin / User)  
+- **Search & Filtering:** Ransack  
+- **Pagination:** will_paginate  
+- **UI:** Bootstrap 5, Select2  
+- **Mail:** ActionMailer (SMTP – Gmail)
 
-* How to run the test suite
+---
 
-* Services (job queues, cache servers, search engines, etc.)
+## Features
 
-* Deployment instructions
+### User Management
+- User authentication using Devise
+- Roles: **Admin** and **User**
+- Users can:
+  - Sign up via UI
+  - Be created via seed data
+- Admin can:
+  - View all users
+  - Edit user details
+  - Soft delete users
 
-* ...
+---
+
+### Task Management
+- Create, view, update, and delete tasks
+- Assign one task to multiple users
+- Each assignment has:
+  - Status (Pending / In Progress / Completed)
+  - Start date
+  - Due date
+- Soft delete support
+
+---
+
+### Dashboards
+#### Admin Dashboard
+- Total tasks count
+- Status-wise task summary:
+  - Pending
+  - In Progress
+  - Completed
+- Can view tasks of all users
+
+#### User Dashboard
+- Sees only assigned tasks
+- Status-wise task count for logged-in user
+
+---
+
+## Search & Filters
+- Filter tasks by:
+  - Status
+  - Assigned User (Admin only)
+- Combined filtering supported (Status + User)
+- Pagination enabled
+
+---
+
+## Email Notifications
+- When a task is assigned, an email is sent to the user
+- Email includes:
+  - Task title
+  - Description
+  - Due date
+- Emails are sent to: souravkarak00@gmail.com
+
+---
+
+## Project Setup
+
+### Clone the Repository
+```bash
+git clone https://github.com/Sourav320/Task-Management-System.git
+cd Task-Management-System
+

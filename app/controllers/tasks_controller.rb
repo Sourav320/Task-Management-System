@@ -3,17 +3,13 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    base_scope = TaskAssignment
-                  .includes(:task, :user)
-                  .where(tasks: { is_delete: false })
-                  .references(:tasks)
+    base_scope = TaskAssignment.includes(:task, :user).where(tasks: { is_delete: false }).references(:tasks)
 
-    # Role-based visibility
     unless current_user.roles.last.name.downcase == "admin"
       base_scope = base_scope.where(user_id: current_user.id)
     end
 
-    # Ransack search
+
     @q = base_scope.ransack(params[:q])
 
     @task_assignments = @q
@@ -21,7 +17,6 @@ class TasksController < ApplicationController
                           .order(created_at: :desc)
                           .paginate(page: params[:page], per_page: 10)
 
-    # For filter dropdown
     @users = User.where(is_active: true, is_delete: false)
   end
 
