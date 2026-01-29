@@ -119,6 +119,10 @@ cd Task-Management-System
 ## Run Server
 - rails s
 
+## For Working JavaScript in the Asset Folder
+-- rails assets:precompile
+
+
 ## Open Browser
 - http://localhost:3000
 
